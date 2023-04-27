@@ -7,7 +7,6 @@ from textwrap import dedent
 from time import sleep
 
 
-USER_REVIEWS_URL = 'https://dvmn.org/api/user_reviews/'
 USER_REVIEWS_LONG_POLLING = 'https://dvmn.org/api/long_polling/'
 
 
