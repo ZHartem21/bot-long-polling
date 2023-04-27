@@ -18,9 +18,10 @@ def main():
     bot = telegram.Bot(token=tg_token)
     headers = {'Authorization': 'Token {0}'.format(dvmn_token)}
     while True:
-        timestamp = ''
         try:
-            response = requests.get(USER_REVIEWS_LONG_POLLING, headers=headers, timeout=90, params={'Timestamp': timestamp})
+            if timestamp:
+                params = {'Timestamp': timestamp}
+            response = requests.get(USER_REVIEWS_LONG_POLLING, headers=headers, timeout=90, params=params)
             response.raise_for_status()
         except requests.exceptions.ReadTimeout or ConnectionError:
             sleep(30)
@@ -38,7 +39,7 @@ def main():
                 Преподавателю всё понравилось, можно приступать к следующему уроку!\n
                 Ссылка на урок: {review['new_attempts'][0]['lesson_url']}''')
             bot.send_message(text=message_text, chat_id=tg_chat_id)
-        timestamp = round(review['new_attempts'][0]['timestamp'])
+        timestamp = review['new_attempts'][0]['timestamp']
 
 
 if __name__ == '__main__':
