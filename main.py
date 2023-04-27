@@ -4,6 +4,7 @@ import telegram
 
 from dotenv import load_dotenv
 from textwrap import dedent
+from time import sleep
 
 
 USER_REVIEWS_URL = 'https://dvmn.org/api/user_reviews/'
@@ -23,6 +24,7 @@ def main():
             response = requests.get(USER_REVIEWS_LONG_POLLING, headers=headers, timeout=90, params={'Timestamp': timestamp})
             response.raise_for_status()
         except requests.exceptions.ReadTimeout or ConnectionError:
+            sleep(30)
             continue
         review = response.json()
         if review['new_attempts'][0]['is_negative']:
