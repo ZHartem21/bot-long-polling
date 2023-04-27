@@ -26,7 +26,7 @@ def main():
             sleep(30)
             continue
         review = response.json()
-        if review['new_attempts'][0]['is_negative']:
+        if review['new_attempts'][0]['is_negative'] and review['status'] = 'found':
             message_text = dedent(f'''\
                 У вас проверили работу "{review['new_attempts'][0]['lesson_title']}".\n
                 К сожалению, в работе нашлись ошибки.\n
