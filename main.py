@@ -25,7 +25,9 @@ def main():
             else:
                 response = requests.get(USER_REVIEWS_LONG_POLLING, headers=headers, timeout=90,)
             response.raise_for_status()
-        except requests.exceptions.ReadTimeout or ConnectionError:
+        except requests.exceptions.ReadTimeout:
+            continue
+        except ConnectionError:
             sleep(30)
             continue
         review = response.json()
