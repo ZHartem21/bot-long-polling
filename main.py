@@ -71,6 +71,8 @@ def main():
     except Exception as err:
         logger.error('Бот упал с ошибкой:')
         logger.exception(err)
+        sleep(60)
+        main()
 
 if __name__ == '__main__':
     main()
