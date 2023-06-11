@@ -10,6 +10,8 @@ from time import sleep
 
 USER_REVIEWS_LONG_POLLING = 'https://dvmn.org/api/long_polling/'
 
+logger = logging.getLogger('Logger')
+
 
 class TelegramHandler(logging.Handler):
     def __init__(self, tg_bot, tg_chat_id):
@@ -32,7 +34,6 @@ def main():
         headers = {'Authorization': 'Token {0}'.format(dvmn_token)}
         timestamp = None
         logging.basicConfig(format="%(message)s", level=logging.INFO)
-        logger = logging.getLogger('Logger')
         logger.setLevel(logging.INFO)
         logger.addHandler(TelegramHandler(bot, tg_chat_id))
         logger.info('Bot started')
@@ -65,14 +66,9 @@ def main():
                     bot.send_message(text=message_text, chat_id=tg_chat_id)
                 logger.info('Bot has processed review')
 
-            else:
-                continue
-
     except Exception as err:
         logger.error('Бот упал с ошибкой:')
         logger.exception(err)
-        sleep(60)
-        main()
 
 if __name__ == '__main__':
     main()
